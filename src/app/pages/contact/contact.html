@@ -41,6 +41,9 @@
         @if (submitted) {
           <div class="success">✓ Message envoyé avec succès !</div>
         }
+        @if (error) {
+          <div class="error-msg">Une erreur est survenue. Réessayez ou envoyez un courriel directement.</div>
+        }
         <form (ngSubmit)="onSubmit()">
           <div class="form-row">
             <div class="form-group">
@@ -60,7 +63,9 @@
             <label for="message">Message</label>
             <textarea id="message" name="message" [(ngModel)]="form.message" required placeholder="Votre message..." rows="5"></textarea>
           </div>
-          <button type="submit" class="submit-btn">Envoyer</button>
+          <button type="submit" class="submit-btn" [disabled]="loading">
+            {{ loading ? 'Envoi en cours...' : 'Envoyer' }}
+          </button>
         </form>
       </div>
     </div>
