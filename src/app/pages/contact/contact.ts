@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+declare const emailjs: any;
+
 @Component({
   selector: 'app-contact',
   imports: [FormsModule],
@@ -18,23 +20,15 @@ export class Contact {
     this.error = false;
 
     try {
-      const response = await fetch('https://formspree.io/f/xaqvkvgp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          name: this.form.name,
-          email: this.form.email,
-          subject: this.form.subject,
-          message: this.form.message
-        })
-      });
+      await emailjs.send('service_i67pend', 'template_mg4vdyu', {
+        name: this.form.name,
+        sujet: this.form.subject,
+        courriel: this.form.email,
+        message: this.form.message
+      }, 'NtN7A7ZCZHsofmMu4');
 
-      if (response.ok) {
-        this.submitted = true;
-        this.form = { name: '', email: '', subject: '', message: '' };
-      } else {
-        this.error = true;
-      }
+      this.submitted = true;
+      this.form = { name: '', email: '', subject: '', message: '' };
     } catch {
       this.error = true;
     }
