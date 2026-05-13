@@ -1,0 +1,20 @@
+<header class="header" [class.scrolled]="scrolled">
+  <div class="header-inner">
+    <a routerLink="/" class="logo">JM</a>
+
+    <button class="menu-toggle" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen" aria-label="Menu">
+      <span class="bar" [class.open]="menuOpen"></span>
+      <span class="bar" [class.open]="menuOpen"></span>
+      <span class="bar" [class.open]="menuOpen"></span>
+    </button>
+
+    <nav class="nav" [class.open]="menuOpen">
+      <ul>
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="menuOpen = false">Accueil</a></li>
+        <li><a routerLink="/projets" routerLinkActive="active" (click)="menuOpen = false">Projets</a></li>
+        <li><a routerLink="/a-propos" routerLinkActive="active" (click)="menuOpen = false">À Propos</a></li>
+        <li><a routerLink="/contact" routerLinkActive="active" (click)="menuOpen = false">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

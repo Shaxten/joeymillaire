@@ -1,0 +1,59 @@
+.page-hero {
+  background: var(--color-primary);
+  padding: 10rem 2rem 5rem;
+  text-align: center;
+
+  .hero-content { max-width: 600px; margin: 0 auto; }
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700;
+    color: white; margin-bottom: 1rem; font-family: var(--font-body);
+    animation: heroIn 0.6s ease-out both; animation-delay: 0.15s;
+  }
+  .hero-subtitle {
+    color: rgba(255,255,255,0.5); font-size: 1.1rem; line-height: 1.7;
+    animation: heroIn 0.6s ease-out both; animation-delay: 0.3s;
+  }
+}
+
+.projects-page { padding: 5rem 0; }
+
+.projects-list {
+  display: grid; grid-template-columns: 1fr; gap: 2.5rem; max-width: 800px; margin: 0 auto;
+}
+
+.project-card {
+  display: grid; grid-template-columns: 280px 1fr; border-radius: 16px;
+  overflow: hidden; background: white; border: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.4s var(--transition);
+  animation: cardIn 0.5s ease-out both;
+
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.3s; }
+
+  @media (max-width: 700px) { grid-template-columns: 1fr; }
+
+  &:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    .card-emoji { transform: scale(1.15); }
+  }
+
+  .card-image {
+    height: 100%; min-height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    .card-emoji { font-size: 4rem; transition: transform 0.4s; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2)); }
+  }
+
+  .card-body {
+    padding: 2rem;
+    h3 { font-family: var(--font-body); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; }
+    p { color: var(--color-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.2rem; }
+  }
+
+  .card-tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    span { background: var(--color-cream); padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-muted); }
+  }
+}
+
+@keyframes heroIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cardIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }

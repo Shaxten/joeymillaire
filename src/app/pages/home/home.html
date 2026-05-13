@@ -1,0 +1,103 @@
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="grid-lines"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-greeting">Bonjour, je suis</p>
+    <h1 class="hero-name">Joey Millaire</h1>
+    <p class="hero-role">Développeur Web Full-Stack</p>
+    <p class="hero-desc">Je conçois et développe des expériences web modernes, performantes et élégantes.</p>
+    <div class="hero-actions">
+      <a routerLink="/projets" class="btn-primary">Voir mes projets</a>
+      <a routerLink="/contact" class="btn-outline">Me contacter</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="mouse"><div class="wheel"></div></div>
+  </div>
+</section>
+
+<!-- Projects Preview -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="label">Réalisations</span>
+      <h2>Projets Récents</h2>
+    </div>
+    <div class="projects-grid stagger-children">
+      <a href="https://shaxten.github.io/cremerie/" target="_blank" class="project-card stagger-item">
+        <div class="card-image" style="background: linear-gradient(135deg, #667eea, #e91e63);">
+          <span class="card-emoji">🍦</span>
+        </div>
+        <div class="card-body">
+          <h3>Glacée — Crèmerie</h3>
+          <p>Site vitrine pour une crèmerie artisanale. Animations 3D, design coloré et catalogue de produits.</p>
+          <div class="card-tags">
+            <span>Angular</span><span>SCSS</span><span>Animations CSS</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://shaxten.github.io/coiffure/" target="_blank" class="project-card stagger-item">
+        <div class="card-image" style="background: linear-gradient(135deg, #0a0a0a, #333);">
+          <span class="card-emoji">✂️</span>
+        </div>
+        <div class="card-body">
+          <h3>Élégance — Salon de Coiffure</h3>
+          <p>Site professionnel noir et blanc pour un salon haut de gamme. Réservation en ligne et galerie.</p>
+          <div class="card-tags">
+            <span>Angular</span><span>SCSS</span><span>Design Minimaliste</span>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="section-cta reveal">
+      <a routerLink="/projets" class="text-link">Voir tous les projets →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="label">Compétences</span>
+      <h2>Technologies</h2>
+    </div>
+    <div class="skills-grid stagger-children">
+      <div class="skill stagger-item">
+        <div class="skill-icon">⚡</div>
+        <h3>Angular</h3>
+        <p>Applications web modernes et performantes</p>
+      </div>
+      <div class="skill stagger-item">
+        <div class="skill-icon">🎨</div>
+        <h3>CSS / SCSS</h3>
+        <p>Animations, responsive design, UI/UX</p>
+      </div>
+      <div class="skill stagger-item">
+        <div class="skill-icon">📱</div>
+        <h3>TypeScript</h3>
+        <p>Code typé, maintenable et scalable</p>
+      </div>
+      <div class="skill stagger-item">
+        <div class="skill-icon">🚀</div>
+        <h3>CI/CD</h3>
+        <p>GitHub Actions, déploiement automatisé</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="container">
+    <div class="cta-card reveal">
+      <h2>Un projet en tête ?</h2>
+      <p>Discutons de votre vision et donnons-lui vie ensemble.</p>
+      <a routerLink="/contact" class="btn-primary">Démarrer une conversation</a>
+    </div>
+  </div>
+</section>
