@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 declare const emailjs: any;
+declare const grecaptcha: any;
 
 @Component({
   selector: 'app-contact',
@@ -10,6 +11,8 @@ declare const emailjs: any;
   styleUrl: './contact.scss'
 })
 export class Contact {
+  @ViewChild('contactForm', { static: false }) contactForm!: ElementRef;
+
   form = { name: '', email: '', subject: '', message: '' };
   submitted = false;
   error = false;
@@ -20,15 +23,14 @@ export class Contact {
     this.error = false;
 
     try {
-      await emailjs.send('service_i67pend', 'template_mg4vdyu', {
-        name: this.form.name,
-        sujet: this.form.subject,
-        courriel: this.form.email,
-        message: this.form.message
-      }, 'NtN7A7ZCZHsofmMu4');
+      const formElement = this.contactForm.nativeElement as HTMLFormElement;
+      await emailjs.sendForm('service_i67pend', 'template_mg4vdyu', formElement, 'NtN7A7ZCZHsofmMu4');
 
       this.submitted = true;
       this.form = { name: '', email: '', subject: '', message: '' };
+      if (typeof grecaptcha !== 'undefined') {
+        grecaptcha.reset();
+      }
     } catch {
       this.error = true;
     }
