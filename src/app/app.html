@@ -1,3 +1,263 @@
-<app-header></app-header>
-<main><router-outlet></router-outlet></main>
-<app-footer></app-footer>
+<div class="progress" aria-hidden="true"></div>
+
+<a class="brand" href="#" (click)="go($event, 'accueil')" aria-label="Joey Millaire — retour en haut">
+  <span class="brand-mark">JM</span>
+</a>
+
+<!-- Dock de navigation flottant -->
+<nav class="dock" aria-label="Navigation principale">
+  @for (item of nav; track item.id) {
+    <a [href]="'#' + item.id" class="dock-item" [class.is-active]="active() === item.id"
+       [attr.aria-current]="active() === item.id ? 'true' : null"
+       (click)="go($event, item.id)">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path [attr.d]="item.icon"/></svg>
+      <span class="dock-label">{{ item.label }}</span>
+    </a>
+  }
+</nav>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section id="accueil" class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-glow" data-parallax="0.25"></div>
+    </div>
+
+    <!-- Lignes de code flottantes -->
+    <div class="code-layer" data-parallax="-0.1" aria-hidden="true">
+      @for (l of codeLines; track $index; let i = $index) {
+        <code class="code-line" [class.desk-only]="l.desk" [class.has-caret]="l.caret"
+              [style.left.%]="l.x" [style.top.%]="l.y"
+              [style.--depth]="l.depth" [style.--dur]="l.dur + 's'" [style.--delay]="l.delay + 's'" [style.--i]="i"><span [innerHTML]="l.html"></span></code>
+      }
+    </div>
+
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow reveal"><span class="dot"></span>Développeur Web Full-Stack · Victoriaville, QC</p>
+        <h1 class="hero-title reveal" style="--d: 1">
+          <span class="line">Joey</span>
+          <span class="line"><span class="grad">Millaire</span></span>
+        </h1>
+        <p class="hero-lead reveal" style="--d: 2">
+          Je conçois et développe des expériences web modernes, performantes et élégantes.
+        </p>
+        <div class="hero-actions reveal" style="--d: 3">
+          <a href="#projets" class="btn btn-dark" (click)="go($event, 'projets')">Voir mes projets <span aria-hidden="true">→</span></a>
+          <a href="#contact" class="btn btn-ghost" (click)="go($event, 'contact')">Me contacter</a>
+        </div>
+        <div class="hero-social reveal" style="--d: 4">
+          <a [href]="linkedin" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a [href]="github" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" style="--d: 2">
+        <!-- Repères façon outil de design -->
+        <span class="guide guide-h" aria-hidden="true"></span>
+        <span class="guide guide-v" aria-hidden="true"></span>
+
+        <figure class="portrait" appTilt="10">
+          <div class="select-frame" aria-hidden="true">
+            <span class="layer-name">joey-millaire.webp</span>
+            <i class="hdl tl"></i><i class="hdl tr"></i><i class="hdl bl"></i><i class="hdl br"></i>
+            <i class="hdl tm"></i><i class="hdl bm"></i><i class="hdl ml"></i><i class="hdl mr"></i>
+            <span class="dims">400 × 400</span>
+          </div>
+          <div class="portrait-frame">
+            <img src="images/joey.webp" width="400" height="400" alt="Portrait de Joey Millaire" fetchpriority="high">
+            <span class="glare" aria-hidden="true"></span>
+          </div>
+          <figcaption class="chip chip-a">📍 Victoriaville, QC</figcaption>
+          <span class="chip chip-b" aria-hidden="true">.NET · WordPress · Vue · Angular</span>
+        </figure>
+
+        <!-- Curseur de collaboration -->
+        <div class="collab-cursor" aria-hidden="true">
+          <svg viewBox="0 0 16 16" width="18" height="18"><path d="M2 1.5 14 7l-5.2 1.6L6.6 14z"/></svg>
+          <span>Joey</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#projets" class="scroll-cue" (click)="go($event, 'projets')" aria-label="Défiler vers les projets">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- ============ PROJETS ============ -->
+  <section id="projets" class="section">
+    <div class="container">
+      <header class="section-head reveal">
+        <span class="kicker">01 — Réalisations</span>
+        <h2>Projets récents</h2>
+        <p>Des sites web modernes, performants et visuellement impactants.</p>
+      </header>
+
+      <div class="projects">
+        @for (p of projects; track p.url; let i = $index) {
+          <a class="project reveal" [style.--d]="i" [href]="p.url" target="_blank" rel="noopener" appTilt="6">
+            <div class="project-visual">
+              <div class="browser" aria-hidden="true"><i></i><i></i><i></i><span>{{ p.domain }}</span></div>
+              <div class="shot">
+                <img [src]="p.image" width="800" height="500" loading="lazy" decoding="async"
+                     [alt]="'Aperçu de la page d’accueil de ' + p.domain">
+              </div>
+              <span class="glare" aria-hidden="true"></span>
+            </div>
+            <div class="project-body">
+              <span class="project-kind">{{ p.kind }}</span>
+              <h3>{{ p.title }}</h3>
+              <p>{{ p.description }}</p>
+              <ul class="tags">
+                @for (t of p.tags; track t) { <li>{{ t }}</li> }
+              </ul>
+              <span class="project-link">Voir le site <span aria-hidden="true">↗</span></span>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPÉTENCES ============ -->
+  <section id="competences" class="section section-ink">
+    <div class="container">
+      <header class="section-head reveal">
+        <span class="kicker">02 — Compétences</span>
+        <h2>Formé en .NET, WordPress, Vue.js et Angular</h2>
+      </header>
+      <div class="skills">
+        @for (s of skills; track s.name; let i = $index) {
+          <article class="skill reveal" [style.--d]="i" appTilt="12">
+            <span class="skill-icon" aria-hidden="true">{{ s.icon }}</span>
+            <h3>{{ s.name }}</h3>
+            <p>{{ s.text }}</p>
+          </article>
+        }
+      </div>
+      <p class="extras reveal">
+        <span>Aussi au quotidien</span>
+        @for (x of extras; track x) { <em>{{ x }}</em> }
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ À PROPOS ============ -->
+  <section id="a-propos" class="section">
+    <div class="container about">
+      <header class="section-head reveal">
+        <span class="kicker">03 — À propos</span>
+        <h2>Passionné par le développement web et le design d'interfaces.</h2>
+      </header>
+
+      <div class="about-grid">
+        <div class="about-text reveal" style="--d: 1">
+          <p class="about-role">Joey Millaire — Développeur Web Full-Stack</p>
+          <p>Passionné par la création d'expériences web modernes et performantes. Je combine expertise technique et sensibilité design pour livrer des projets qui se démarquent.</p>
+          <p>Formé en .NET, WordPress, Vue.js et Angular, je maîtrise l'ensemble du cycle de développement — de la conception à la mise en production avec CI/CD automatisé.</p>
+          <p>Chaque projet est une opportunité de repousser les limites du possible et de créer quelque chose d'unique.</p>
+        </div>
+
+        <ol class="values">
+          @for (v of values; track v.num; let i = $index) {
+            <li class="value reveal" [style.--d]="i + 1">
+              <span class="value-num">{{ v.num }}</span>
+              <div>
+                <h3>{{ v.name }}</h3>
+                <p>{{ v.text }}</p>
+              </div>
+            </li>
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="section contact">
+    <div class="container contact-grid">
+      <div class="contact-info reveal">
+        <span class="kicker">04 — Contact</span>
+        <h2>Un projet en tête&nbsp;?</h2>
+        <p>Discutons de votre vision et donnons-lui vie ensemble. N'hésitez pas à me contacter pour en discuter.</p>
+
+        <ul class="info">
+          <li>
+            <a [href]="'mailto:' + email">
+              <span class="info-icon" aria-hidden="true">✉️</span>
+              <span><small>Courriel</small>{{ email }}</span>
+            </a>
+          </li>
+          <li>
+            <div>
+              <span class="info-icon" aria-hidden="true">📍</span>
+              <span><small>Localisation</small>Victoriaville, Québec, Canada</span>
+            </div>
+          </li>
+          <li>
+            <a [href]="github" target="_blank" rel="noopener">
+              <span class="info-icon" aria-hidden="true">💼</span>
+              <span><small>GitHub</small>github.com/Shaxten</span>
+            </a>
+          </li>
+          <li>
+            <a [href]="linkedin" target="_blank" rel="noopener">
+              <span class="info-icon info-in" aria-hidden="true">in</span>
+              <span><small>LinkedIn</small>linkedin.com/in/joey-millaire1998</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-card reveal" style="--d: 1">
+        <h3>Envoyer un message</h3>
+        @if (submitted()) {
+          <div class="alert alert-ok" role="status">✓ Message envoyé avec succès !</div>
+        }
+        @if (error()) {
+          <div class="alert alert-err" role="alert">Une erreur est survenue. Réessayez ou envoyez un courriel directement.</div>
+        }
+        <form #contactForm ngNativeValidate (ngSubmit)="onSubmit()">
+          <div class="form-row">
+            <label class="field">
+              <span>Nom</span>
+              <input name="name" [(ngModel)]="form.name" required placeholder="Votre nom" autocomplete="name">
+            </label>
+            <label class="field">
+              <span>Courriel</span>
+              <input name="courriel" type="email" [(ngModel)]="form.email" required placeholder="votre&#64;courriel.com" autocomplete="email">
+            </label>
+          </div>
+          <label class="field">
+            <span>Sujet</span>
+            <input name="sujet" [(ngModel)]="form.subject" required placeholder="Sujet">
+          </label>
+          <label class="field">
+            <span>Message</span>
+            <textarea name="message" [(ngModel)]="form.message" required placeholder="Votre message..." rows="5"></textarea>
+          </label>
+          <div class="captcha" #captcha></div>
+          @if (captchaMissing()) {
+            <p class="captcha-hint" role="alert">Veuillez cocher « Je ne suis pas un robot » avant d'envoyer.</p>
+          }
+          <button type="submit" class="btn btn-dark btn-block" [disabled]="loading()">
+            {{ loading() ? 'Envoi en cours...' : 'Envoyer' }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <p>&copy; {{ year }} Joey Millaire. Tous droits réservés.</p>
+    <div class="footer-links">
+      <a [href]="'mailto:' + email">Courriel</a>
+      <a [href]="github" target="_blank" rel="noopener">GitHub</a>
+      <a [href]="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" (click)="go($event, 'accueil')">Haut de page ↑</a>
+    </div>
+  </div>
+</footer>
