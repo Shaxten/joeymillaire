@@ -168,6 +168,7 @@ html:not(.is-loaded) .hero .reveal { opacity: 0; translate: 0 28px; }
   display: flex; align-items: center;
   padding: 110px 0 90px;
   overflow: hidden;
+  overflow: clip; /* empêche tout défilement interne du hero */
 }
 .hero-bg {
   position: absolute; inset: 0; pointer-events: none;
@@ -278,24 +279,7 @@ html:not(.is-loaded) .code-line { opacity: 0; translate: 0 12px; }
 @keyframes code-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @keyframes caret { 50% { opacity: 0; } }
 
-/* ---------- Repères et cadre de sélection ---------- */
-.guide {
-  position: absolute; z-index: -1; pointer-events: none;
-  opacity: 0; transition: opacity 1.2s var(--ease) 0.6s;
-}
-html.is-loaded .guide { opacity: 1; }
-.guide-h {
-  top: -12px; left: -120px; right: -60vw; height: 1px;
-  background: repeating-linear-gradient(90deg, rgba(224, 85, 155, 0.4) 0 4px, transparent 4px 8px);
-  -webkit-mask: linear-gradient(90deg, transparent, #000 120px);
-  mask: linear-gradient(90deg, transparent, #000 120px);
-}
-.guide-v {
-  left: -12px; top: -40vh; bottom: -30vh; width: 1px;
-  background: repeating-linear-gradient(180deg, rgba(224, 85, 155, 0.4) 0 4px, transparent 4px 8px);
-  -webkit-mask: linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent);
-  mask: linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent);
-}
+/* ---------- Cadre de sélection ---------- */
 .select-frame {
   position: absolute; inset: -12px; z-index: 1; pointer-events: none;
   border: 1.5px solid #6d5dfc; border-radius: 4px;
@@ -515,11 +499,19 @@ html.is-loaded .guide { opacity: 1; }
   outline: none; background: #fff; border-color: rgba(109, 93, 252, 0.6);
   box-shadow: 0 0 0 4px rgba(109, 93, 252, 0.12);
 }
-.captcha:not(:empty) { min-height: 78px; }
+.captcha:not(:empty) {
+  /* le widget Google fait 304 × 78 px fixes : on le réduit sur petit écran */
+  --cs: 1;
+  width: calc(304px * var(--cs)); height: calc(78px * var(--cs));
+}
+.captcha > div { transform: scale(var(--cs)); transform-origin: 0 0; }
 .captcha-hint { margin-top: -6px; font-size: 14px; font-weight: 500; color: #9b2121; }
 .alert { padding: 14px 16px; border-radius: 14px; margin-bottom: 16px; font-weight: 500; font-size: 15px; }
 .alert-ok { background: #e7f6ec; color: #1d6b38; }
 .alert-err { background: #fdecec; color: #9b2121; }
+
+/* Les colonnes de grille ne s'élargissent jamais au-delà de l'écran */
+.hero-grid > *, .projects > *, .skills > *, .about-grid > *, .contact-grid > *, .form-row > * { min-width: 0; }
 
 /* ---------- Pied de page ---------- */
 .footer { padding: 34px 0 110px; background: var(--paper-2); border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
@@ -532,11 +524,11 @@ html.is-loaded .guide { opacity: 1; }
    ========================================================================= */
 @media (max-width: 960px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .hero-visual { order: -1; width: min(72vw, 320px); }
-  .hero { padding-top: 96px; }
+  .hero-visual { width: min(72vw, 320px); margin-top: 28px; }
+  /* sur une colonne, le hero prend la hauteur de son contenu : pas de vide sous la photo */
+  .hero { min-height: auto; padding: 96px 0 72px; }
   .desk-only { display: none; }
-  .hero-copy { margin-top: 14px; }
-  .code-line { font-size: 11px; }
+  .code-layer { display: none; }
   .collab-cursor { display: none; }
   .skills { grid-template-columns: repeat(2, 1fr); }
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
@@ -544,6 +536,10 @@ html.is-loaded .guide { opacity: 1; }
 }
 
 @media (max-width: 640px) {
+  .section { padding: 72px 0; }
+  #projets { padding-top: 80px; }
+  .form-card { padding: 24px 20px; border-radius: 22px; }
+  .captcha:not(:empty) { --cs: 0.9; }
   .projects { grid-template-columns: 1fr; }
   .skills { grid-template-columns: 1fr; gap: 12px; }
   .skill { display: grid; grid-template-columns: 54px 1fr; column-gap: 18px; padding: 22px; }
@@ -561,7 +557,7 @@ html.is-loaded .guide { opacity: 1; }
 }
 
 @media (max-width: 350px) {
-  .captcha { transform: scale(0.88); transform-origin: 0 0; }
+  .captcha:not(:empty) { --cs: 0.76; }
   .dock-item { padding: 0 10px; }
   .dock-item.is-active .dock-label { display: none; }
 }

@@ -210,7 +210,7 @@ export class App implements OnDestroy {
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
     items.forEach(el => io.observe(el));
     this.observers.push(io);
   }
